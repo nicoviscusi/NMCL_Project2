@@ -41,7 +41,7 @@ S = @(x, t) [pi/2 * (u - 1) * cos(pi * (x - t));
 Sa = set_Sa();
 
 % Here we use periodic boundary condition as the option ('peri')
-bc = 'peri';
+bc = 'open';
 
 % Choose order for WENO reconstruction
 k = 3;
@@ -59,7 +59,7 @@ if animation == "True"
         subplot(2, 1, 1)
         plot(xc, h(:, i), 'LineWidth', 2)
         hold on
-        plot(xc, h0(xc - tvec(i)), 'Linewidth', 2)
+        plot(xc, h0(xc - tvec(i)), '--', 'Linewidth', 2)
         %title(['$h(x, t)$ at $t = $ ', num2str(tvec(i))], ...
             %'Interpreter', 'latex')
         xlabel('$x$', 'Interpreter', 'latex')
@@ -76,7 +76,7 @@ if animation == "True"
         subplot(2, 1, 2)
         plot(xc, m(:, i), 'LineWidth', 2)
         hold on
-        plot(xc, u * h0(xc - tvec(i)), 'Linewidth', 2)
+        plot(xc, u * h0(xc - tvec(i)), '--',  'Linewidth', 2)
         %title(['$m(x, t)$ at $t = $ ', num2str(tvec(i))], ...
             %'Interpreter', 'latex')
         xlabel('$x$', 'Interpreter', 'latex')
@@ -89,6 +89,7 @@ if animation == "True"
             %'Interpreter', 'latex')
         set(gca, 'Fontsize', 20)
         drawnow
+        %pause(0.5)
 
     end
 end
