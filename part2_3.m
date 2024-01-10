@@ -48,9 +48,9 @@ k = 3;
 
 % Solve the problem
 [h, m, xc, tvec] = solver(xspan, tspan, N, ...
-    K, h0, m0, @Roe, @flux_phys, Sa, bc, k);
+    K, h0, m0, @LaxFriedrichs, @flux_phys, Sa, bc, k);
 
-
+%%
 % We visualize the solution
 if animation == "True"
     figure(1)
