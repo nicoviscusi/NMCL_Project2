@@ -22,8 +22,8 @@ function f = flux_phys(q)
 % December 2023
 
 g = 1;
-h = q(1);
-m = q(2);
+h = q(1, :);
+m = q(2, :);
 
 f = [m;
      m.^2./h + 1/2*g*h.^2];

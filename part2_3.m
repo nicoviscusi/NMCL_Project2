@@ -30,25 +30,23 @@ N = 200;
 CFL = 0.5;
 
 % Note that max(h0) = 1.5
-dt = CFL * (xspan(2) - xspan(1)) / N * 1 / (u + sqrt(g * 1.5));
-K = round((tspan(end) - tspan(1)) / dt);
 
 % Source function
 S = @(x, t) [pi/2 * (u - 1) * cos(pi * (x - t));
     pi/2 * cos(pi * (x - t)) * (- u + u^2 + g * h0(x - t))];
 
 % We integrate the source term exactly 
-Sa = set_Sa();
+Sa = set_Sa(1);
 
 % Here we use periodic boundary condition as the option ('peri')
-bc = 'open';
+bc = 'peri';
 
 % Choose order for WENO reconstruction
 k = 3;
 
 % Solve the problem
 [h, m, xc, tvec] = solver(xspan, tspan, N, ...
-    K, h0, m0, @LaxFriedrichs, @flux_phys, Sa, bc, k);
+    CFL, h0, m0, @LaxFriedrichs, @flux_phys, Sa, bc, k);
 
 %%
 % We visualize the solution
