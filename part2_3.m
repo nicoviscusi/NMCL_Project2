@@ -42,7 +42,7 @@ Sa = set_Sa(1);
 bc = 'peri';
 
 % Choose order for WENO reconstruction
-k = 3;
+k = 2;
 
 % Solve the problem
 [h, m, xc, tvec] = solver(xspan, tspan, N, ...
@@ -93,54 +93,54 @@ if animation == "True"
 end
 
 
-% 
-% %%  Error analysis 
-% 
-% % We solve the same problem for different values of \Delta x
-% delta_x_vec =  2.^-(4:10);
-% 
-% % Note that we cannot solve for smalle values of delta_x, because we would
-% % need a too large matrix to store the solutions h and m
-% N_vec = (xspan(2) - xspan(1)) ./ delta_x_vec ;
-% err_h_vec = zeros(size(N_vec));
-% err_m_vec = zeros(size(N_vec));
-% 
-% for i=1:length(N_vec)
-%     N = N_vec(i);
-%     k = CFL * (xspan(2) - xspan(1)) / N * 1 / (u + sqrt(g * 1.5));
-%     K = round((tspan(end) - tspan(1)) / k);
-%     T_f = 0.5;
-%     [h, m, ~, xvec, k, delta_x] = conservative_scheme(xspan, tspan, N, ...
-%         K, h0, m0, @lax_friedrichs_flux, @flux_phys, S, bc);
-%     err_h_vec(i) = 1/sqrt(N)*norm(h(:, end) -h0(xvec-T_f)');          
-%     err_m_vec(i) = 1/sqrt(N)*norm(m(:, end) - u*h0(xvec-T_f)');    
-% end
-% 
-% 
-% % Plot the error
-% figure(2)
-% 
-% subplot(2,1,1)
-% loglog(delta_x_vec, err_h_vec , "o-", "Linewidth", 2)
-% hold on
-% loglog(delta_x_vec, delta_x_vec, "--", delta_x_vec, delta_x_vec.^2, "--")
-% xlabel('$\Delta x$', 'Interpreter', 'latex')
-% ylabel("$\|e\|_2$", "Interpreter","latex")
-% title("Error on \(h(x,t)\) at \(t=0.5\)", "Interpreter","latex")
-% legend("Error", "\(\Delta x\)", "\(\Delta x^2\)", "interpreter", ...
-%     "latex",  "location", "best")
-% set(gca, 'Fontsize', 20)
-% grid on
-% 
-% 
-% subplot(2,1,2)
-% loglog(delta_x_vec, err_m_vec, "o-", "Linewidth", 2)
-% hold on
-% loglog(delta_x_vec, delta_x_vec, "--", delta_x_vec, delta_x_vec.^2, "--")
-% xlabel('$\Delta x$', 'Interpreter', 'latex')
-% ylabel("$\|e\|_2$", "Interpreter","latex")
-% title("Error on \(m(x,t)\) at \(t=0.5\)", "Interpreter","latex")
-% legend("Error", "\(\Delta x\)", "\(\Delta x^2\)", "interpreter", ...
-%     "latex", "location", "best")
-% grid on
-% set(gca, 'Fontsize', 20)
+
+%%  Error analysis 
+
+% We solve the same problem for different values of \Delta x
+delta_x_vec = 2.^-(4:9);
+
+% Note that we cannot solve for smalle values of delta_x, because we would
+% need a too large matrix to store the solutions h and m
+N_vec = (xspan(2) - xspan(1)) ./ delta_x_vec ;
+err_h_vec = zeros(size(N_vec));
+err_m_vec = zeros(size(N_vec));
+
+for i=1:length(N_vec)
+    N = N_vec(i);
+    % k = CFL * (xspan(2) - xspan(1)) / N * 1 / (u + sqrt(g * 1.5));
+    % K = round((tspan(end) - tspan(1)) / k);
+    [h, m, xc, tvec] = solver(xspan, tspan, N, ...
+        CFL, h0, m0, @LaxFriedrichs, @flux_phys, Sa, bc, k);
+
+    err_h_vec(i) = 1/sqrt(N) * norm(h(:, end) - h0(xc-tspan(2))');          
+    err_m_vec(i) = 1/sqrt(N) * norm(m(:, end) - u*h0(xc-tspan(2))');    
+end
+
+
+% Plot the error
+figure(2)
+
+subplot(2,1,1)
+loglog(delta_x_vec, err_h_vec , "o-", "Linewidth", 2)
+hold on
+loglog(delta_x_vec, delta_x_vec, "--", delta_x_vec, delta_x_vec.^2, "--", delta_x_vec, 10 * delta_x_vec.^3, "--")
+xlabel('$\Delta x$', 'Interpreter', 'latex')
+ylabel("$\|e\|_2$", "Interpreter","latex")
+title("Error on \(h(x,t)\) at \(t=0.5\)", "Interpreter","latex")
+legend("Error", "\(\Delta x\)", "\(\Delta x^2\)", "\(\Delta x^3\)", "interpreter", ...
+    "latex",  "location", "best")
+set(gca, 'Fontsize', 20)
+grid on
+
+
+subplot(2,1,2)
+loglog(delta_x_vec, err_m_vec, "o-", "Linewidth", 2)
+hold on
+loglog(delta_x_vec, delta_x_vec, "--", delta_x_vec, delta_x_vec.^2, "--", delta_x_vec, 10 * delta_x_vec.^3, "--")
+xlabel('$\Delta x$', 'Interpreter', 'latex')
+ylabel("$\|e\|_2$", "Interpreter","latex")
+title("Error on \(m(x,t)\) at \(t=0.5\)", "Interpreter","latex")
+legend("Error", "\(\Delta x\)", "\(\Delta x^2\)", "\(\Delta x^3\)", "interpreter", ...
+    "latex", "location", "best")
+grid on
+set(gca, 'Fontsize', 20)
