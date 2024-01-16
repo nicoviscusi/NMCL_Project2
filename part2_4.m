@@ -5,7 +5,7 @@ clc
 %%% Code by Francesco Sala and Nicolo' Viscusi %%%
 
 % Set to true if you want to see the animation of the solutions over time
-animation = "True";
+animation = "False";
 
 %% Resolution of the problem
 

@@ -97,7 +97,7 @@ end
 %%  Error analysis 
 
 % We solve the same problem for different values of \Delta x
-delta_x_vec = 2.^-(4:9);
+delta_x_vec = 2.^-(6:11);
 
 % Note that we cannot solve for smalle values of delta_x, because we would
 % need a too large matrix to store the solutions h and m
