@@ -102,7 +102,7 @@ for i = 1 : length(N_vec)
 
     % We now want to compare h1(:, end) with h1_ex(:, end), 
     % but this second vector is defined on a different grid xvec1_ex
-    % We interpolate h1_ex(:, end) on the grid xc
+    % We interpolate h1_ex(:, end) on the grid xc1
     h1ex_interp = interp1(xvec1_ex, h1_ex(:, end), xc1);
     m1ex_interp = interp1(xvec1_ex, m1_ex(:, end), xc1);
 
