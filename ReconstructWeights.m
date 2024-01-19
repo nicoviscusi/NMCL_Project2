@@ -3,6 +3,7 @@ function [c] = ReconstructWeights(m,r)
 %               v_{j+1/2} = \sum_{j=0}^{m-1} c_{ir} v_{i-r+j}
 %     with m=order and r=shift (-1<=r<=m-1).
 % Function implemented by Jan S. Hesthaven
+
 c = zeros(1,m); fh = @(s) (-1)^(s+m)*prod(1:s)*prod(1:(m-s));
 for i=0:m-1
     q = linspace(i+1,m,m-i);

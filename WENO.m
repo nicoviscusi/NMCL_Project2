@@ -3,6 +3,7 @@ function [um,up] = WENO(xloc,uloc,m,Crec,dw,beta);
 %          approach based on 2m-1 long vectors uloc with cell
 % Set WENO parameters
 % Function implemented by Jan S. Hesthaven
+
 p = 1; q = m-1; vareps = 1e-6;
 
 % Treat special case of m=1 - no stencil to select

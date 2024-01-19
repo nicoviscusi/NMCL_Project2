@@ -19,7 +19,7 @@ function f = flux_phys(q)
 %   equations.
 %
 % Authors: [Francesco Sala, Nicolo' Viscusi]
-% December 2023
+% January 2024
 
 g = 1;
 h = q(1, :);

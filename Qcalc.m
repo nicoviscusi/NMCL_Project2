@@ -1,6 +1,7 @@
 function [Qelem] = Qcalc(D,m,l);
 % Purpose: Evaluate entries in the smoothness indicator for WENO
 % Function implemented by Jan S. Hesthaven
+
 [x,w] = LegendreGQ(m); xq = x./2; Qelem = 0;
 for i=1:m+1
     xvec = zeros(m-l+1,1);

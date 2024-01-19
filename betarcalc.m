@@ -2,6 +2,7 @@ function [errmat] = betarcalc(x,m)
 % Purpose: Compute matrix to allow evaluation of smoothness indicator in
 %          WENO based on stencil [x] of length m+1 .
 %          Returns sum of operators for l=1.m-1
+% Function by Jan H. Hesthaven
 
 % Evaluate Lagrange polynomials
 [cw] = lagrangeweights(x);

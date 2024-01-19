@@ -2,6 +2,7 @@ function [d]=LinearWeights(m,r0)
 % Purpose: Compute linear weights for maximum accuracy 2m-1, 
 % using stencil shifted $r_0=-1,0$ points upwind.
 % Function implemented by Jan S. Hesthaven
+
 A = zeros(m,m); b = zeros(m,1);
 
 % Setup linear system for coefficients

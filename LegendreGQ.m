@@ -3,6 +3,7 @@ function [x,w] = LegendreGQ(m);
 % Purpose: Compute the m'th order Legendre Gauss quadrature points, x, 
 %          and weights, w
 % Function implemented by Jan S. Hesthaven
+
 if (m==0) x(1)=0; w(1) = 2; return; end;
 
 % Form symmetric matrix from recurrence.

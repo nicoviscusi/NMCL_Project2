@@ -1,5 +1,41 @@
 function [h, m, xc, tvec] = solver(xspan, tspan, N, CFL, g, h0, m0, ...
     flux, flux_phys, bc, k, PROBLEM)
+% SOLVER - Solve a hyperbolic conservation law using the SSP-RK3 scheme.
+%
+%   [h, m, xc, tvec] = SOLVER(xspan, tspan, N, CFL, g, h0, m0, ...
+%                             flux, flux_phys, bc, k, PROBLEM)
+%   solves a hyperbolic conservation law using the SSP-RK3 scheme 
+%   and returns the solutions for water height 'h', discharge 'm', 
+%   spatial grid locations 'xc' and the time vector 'tvec'.
+%
+%   Input:
+%       xspan     - Spatial domain [x_start, x_end].
+%       tspan     - Time domain [t_start, t_end].
+%       N         - Number of spatial grid points.
+%       CFL       - Courant-Friedrichs-Lewy (CFL) number for adaptive 
+%                   time-stepping.
+%       g         - Gravitational constant (g=1).
+%       h0        - Function handle for the initial water height
+%                   condition.
+%       m0        - Function handle for the initial discharge condition.
+%       flux      - Flux function for the conservative variables.
+%       flux_phys - Flux function in physical variables.
+%       bc        - String specifying the type of boundary condition.
+%                   Supported values: 'peri' (periodic), 'open'
+%                   (open boundary).
+%       k         - Order of accuracy for WENO reconstruction.
+%       PROBLEM   - Integer specifying the problem type.
+%                   Supported values: 1 or 2.
+%
+%   Output:
+%       h         - Matrix of water height solutions over time.
+%       m         - Matrix of discharge solutions over time.
+%       xc        - Spatial grid locations.
+%       tvec      - Time vector.
+%
+% Authors: [Francesco Sala, Nicolo' Viscusi]
+% January 2024
+
 
 % Define preliminary variables
 dx      = (xspan(2) - xspan(1)) / N;
@@ -7,7 +43,7 @@ xc      = (xspan(1) + 0.5 * dx) : dx : (xspan(2) - 0.5 * dx);
 xf      = linspace(xspan(1), xspan(2), N + 1);
 h       = zeros(N,1);
 m       = zeros(N,1);
-tvec    = [0];
+tvec    = 0;
 
 % We compute cell-averages of the initial condition
 for j = 1 : N
@@ -76,8 +112,8 @@ while (t < tspan(2))
     end
 
  
-    % We use Runge-Kutta Strong Stability Preserving scheme to integrate in
-    % time (SSP-RK3) - see exercise sheet for algorithm
+    % We use Runge-Kutta Strong Stability Preserving scheme to integrate 
+    % in time (SSP-RK3) - see exercise sheet for algorithm
 
     % SSP-RK3 Stage1
     RHS = evalRHS(q, N, dt, dx, flux, flux_phys, bc, Crec, ...

@@ -1,8 +1,9 @@
 function [cw] = lagrangeweights(x)
-% Purpose: Compute weights for Taylor expansion of Lagrange polynomial based
-%          on x and evaluated at 0.
+% Purpose: Compute weights for Taylor expansion of Lagrange polynomial
+%          based on x and evaluated at 0.
 %          Method due to Fornberg (SIAM Review, 1998, 685-691)
 % Function implemented by Jan S. Hesthaven
+
 np = length(x); cw=zeros(np,np);
 cw(1,1)=1.0; c1 = 1.0; c4 = x(1);
 for i=2:np
