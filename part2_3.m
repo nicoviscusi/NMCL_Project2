@@ -45,14 +45,14 @@ k = 2;
 % We visualize the solution
 if animation == "True"
     figure(1)
-    for i = 1 : 20 : length(tvec)
+    for i = 1 : 1 : length(tvec)
 
         subplot(2, 1, 1)
         plot(xc, h(:, i), 'LineWidth', 2)
         hold on
         plot(xc, h0(xc - tvec(i)), '--', 'Linewidth', 2)
-        %title(['$h(x, t)$ at $t = $ ', num2str(tvec(i))], ...
-            %'Interpreter', 'latex')
+        title(['$h(x, t)$ at $t = $ ', num2str(tvec(i))], ...
+            'Interpreter', 'latex')
         xlabel('$x$', 'Interpreter', 'latex')
         ylabel('$h(x, t)$', 'Interpreter', 'latex')
         grid on
@@ -68,8 +68,8 @@ if animation == "True"
         plot(xc, m(:, i), 'LineWidth', 2)
         hold on
         plot(xc, u * h0(xc - tvec(i)), '--',  'Linewidth', 2)
-        %title(['$m(x, t)$ at $t = $ ', num2str(tvec(i))], ...
-            %'Interpreter', 'latex')
+        title(['$m(x, t)$ at $t = $ ', num2str(tvec(i))], ...
+            'Interpreter', 'latex')
         xlabel('$x$', 'Interpreter', 'latex')
         ylabel('$m(x, t)$', 'Interpreter', 'latex')
         grid on
@@ -112,12 +112,14 @@ figure(2)
 subplot(2,1,1)
 loglog(delta_x_vec, err_h_vec , "o-", "Linewidth", 2)
 hold on
-loglog(delta_x_vec, delta_x_vec, "--", delta_x_vec, delta_x_vec.^2, "--", delta_x_vec, 10 * delta_x_vec.^3, "--")
+loglog(delta_x_vec, delta_x_vec, "--", "Linewidth", 2)
+loglog(delta_x_vec, 10 * delta_x_vec.^2, "--", "Linewidth", 2)
+loglog(delta_x_vec, 10 * delta_x_vec.^3, "--", "Linewidth", 2)
 xlabel('$\Delta x$', 'Interpreter', 'latex')
 ylabel("$\|e\|_2$", "Interpreter","latex")
 title("Error on \(h(x,t)\) at \(t=1\)", "Interpreter","latex")
-legend("Error", "\(\Delta x\)", "\(\Delta x^2\)", "\(\Delta x^3\)", "interpreter", ...
-    "latex",  "location", "best")
+legend("Error", "\(\Delta x\)", "\(\Delta x^2\)", "\(\Delta x^3\)", ...
+    "interpreter", "latex",  "location", "best")
 set(gca, 'Fontsize', 20)
 grid on
 
@@ -125,11 +127,13 @@ grid on
 subplot(2,1,2)
 loglog(delta_x_vec, err_m_vec, "o-", "Linewidth", 2)
 hold on
-loglog(delta_x_vec, delta_x_vec, "--", delta_x_vec, delta_x_vec.^2, "--", delta_x_vec, 10 * delta_x_vec.^3, "--")
+loglog(delta_x_vec, delta_x_vec, "--", "Linewidth", 2)
+loglog(delta_x_vec, 10 * delta_x_vec.^2, "--", "Linewidth", 2)
+loglog(delta_x_vec, 10 * delta_x_vec.^3, "--", "Linewidth", 2)
 xlabel('$\Delta x$', 'Interpreter', 'latex')
 ylabel("$\|e\|_2$", "Interpreter","latex")
 title("Error on \(m(x,t)\) at \(t=1\)", "Interpreter","latex")
-legend("Error", "\(\Delta x\)", "\(\Delta x^2\)", "\(\Delta x^3\)", "interpreter", ...
-    "latex", "location", "best")
+legend("Error", "\(\Delta x\)", "\(\Delta x^2\)", "\(\Delta x^3\)", ...
+    "interpreter", "latex", "location", "best")
 grid on
 set(gca, 'Fontsize', 20)
